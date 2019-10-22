@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-electron": {
+    "optix-desktop": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -25,6 +25,7 @@
               "src/favicon.512x512.png"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -69,21 +70,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "optix-desktop:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "angular-electron:build:dev"
+              "browserTarget": "optix-desktop:build:dev"
             },
             "production": {
-              "browserTarget": "angular-electron:build:production"
+              "browserTarget": "optix-desktop:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "optix-desktop:build"
           }
         },
         "test": {
@@ -95,6 +96,7 @@
             "karmaConfig": "src/karma.conf.js",
             "scripts": [],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "assets": [
@@ -121,7 +123,7 @@
         }
       }
     },
-    "angular-electron-e2e": {
+    "optix-desktop-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -139,7 +141,7 @@
       }
     }
   },
-  "defaultProject": "angular-electron",
+  "defaultProject": "optix-desktop",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

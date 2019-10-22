@@ -1,5 +1,26 @@
 <div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+  <mat-card class="gpu-card">
+    <mat-card-header>
+      <mat-card-title>GPU</mat-card-title>
+      <mat-card-subtitle>{{ gpuData?gpuData[0]:null }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content style="overflow:scroll; height:400px;">
+      <li>Base Clock</li>
+      <pre>
+       {{  gpuData?gpuData[1]:null  }}
+      </pre>
+      <li>Current Clock</li>
+      <pre>
+       {{  gpuData?gpuData[2]:null  }}
+      </pre>
+      <li>Cooler</li>
+      <pre>
+       {{  gpuData?gpuData[3]:null  }}
+      </pre>
+      <li>Temperature</li>
+      <pre>
+       {{  gpuData?gpuData[4]:null  }}
+      </pre>
+    </mat-card-content>
+  </mat-card>
 </div>
