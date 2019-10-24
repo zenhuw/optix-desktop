@@ -1,26 +1,67 @@
 <div class="container">
-  <mat-card class="gpu-card">
-    <mat-card-header>
-      <mat-card-title>GPU</mat-card-title>
-      <mat-card-subtitle>{{ gpuData?gpuData[0]:null }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content style="overflow:scroll; height:400px;">
-      <li>Base Clock</li>
-      <pre>
-       {{  gpuData?gpuData[1]:null  }}
-      </pre>
-      <li>Current Clock</li>
-      <pre>
-       {{  gpuData?gpuData[2]:null  }}
-      </pre>
-      <li>Cooler</li>
-      <pre>
-       {{  gpuData?gpuData[3]:null  }}
-      </pre>
-      <li>Temperature</li>
-      <pre>
-       {{  gpuData?gpuData[4]:null  }}
-      </pre>
-    </mat-card-content>
-  </mat-card>
+  <mat-grid-list cols="4" rowHeight="1:2">
+    <mat-grid-tile>
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>GPU</mat-card-title>
+          <mat-card-subtitle>{{
+            gpuData ? gpuData[0] : "Loading..."
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <li>Base Clock</li>
+          <pre>
+               {{ gpuData ? gpuData[1] : "Loading..." }}
+              </pre
+          >
+          <li>Current Clock</li>
+          <pre>
+               {{ gpuData ? gpuData[2] : "Loading..." }}
+              </pre
+          >
+          <li>Cooler</li>
+          <pre>
+               {{ gpuData ? gpuData[3] : "Loading..." }}
+              </pre
+          >
+          <li>Temperature</li>
+          <pre>
+               {{ gpuData ? gpuData[4] : "Loading..." }}
+              </pre
+          >
+        </mat-card-content>
+      </mat-card></mat-grid-tile
+    >
+
+    <mat-grid-tile>
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>CPU</mat-card-title>
+          <mat-card-subtitle *ngIf="!cpuData">
+            Loading...
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="cpuData">{{
+            cpuData.cpuInfo.manufacturer + " " + cpuData.cpuInfo.brand
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <li>CPU Current Clock</li>
+          <pre>
+                 {{ (cpuData ? cpuData.cpuSpeed : "Loading...") | json }}
+                </pre
+          >
+          <li>CPU Temperature</li>
+          <pre>
+                 {{ (cpuData ? cpuData.cpuTemp : "Loading...") | json }}
+                </pre
+          >
+          <li>CPU Temperature</li>
+          <pre>
+                 {{ (cpuData ? cpuData.cpuLoad : "Loading...") | json }}
+                </pre
+          >
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

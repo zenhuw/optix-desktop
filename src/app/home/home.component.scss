@@ -1,12 +1,23 @@
 .container {
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 
   background: url(../../assets/background.jpg) no-repeat center fixed;
-  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-  background-size: cover; /* version standardisée */
+  -webkit-background-size: cover;
+  /* pour anciens Chrome et Safari */
+  background-size: cover;
+  /* version standardisée */
+
+  .component-card {
+    height: 450px;
+    width:100%;
+    mat-card-content {
+      overflow: auto;
+      height: 90%
+    }
+  }
 
   .title {
     color: white;

@@ -82,6 +82,7 @@
     "@angular/cdk": "~8.2.3",
     "@angular/forms": "^8.0.0 || ^9.0.0-0",
     "@angular/material": "^8.2.3",
-    "electron-edge-js": "^12.4.0"
+    "electron-edge-js": "^12.4.0",
+    "systeminformation": "^4.14.17"
   }
 }

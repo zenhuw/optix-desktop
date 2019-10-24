@@ -6,6 +6,7 @@ import { ipcRenderer, webFrame, remote } from "electron";
 import * as childProcess from "child_process";
 import * as fs from "fs";
 import * as edge from "electron-edge-js";
+import * as si from "systeminformation";
 
 @Injectable({
   providedIn: "root"
@@ -17,6 +18,7 @@ export class ElectronService {
   childProcess: typeof childProcess;
   fs: typeof fs;
   edge: typeof edge;
+  si: typeof si;
 
   get isElectron() {
     return window && window.process && window.process.type;
@@ -31,6 +33,7 @@ export class ElectronService {
       this.edge = window.require("electron-edge-js");
       this.childProcess = window.require("child_process");
       this.fs = window.require("fs");
+      this.si = window.require("systeminformation");
     }
   }
 }

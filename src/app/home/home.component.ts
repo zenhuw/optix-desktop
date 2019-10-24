@@ -9,15 +9,21 @@ import { switchMap, map } from "rxjs/operators";
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  sourceSubscription: Subscription;
+  sourceGpuSubscription: Subscription;
+  sourceCpuSubscription: Subscription;
   gpuData: any;
+  cpuData: any;
   constructor(public hardwareData: HardwareDataService) {}
 
   ngOnInit() {
     // gpu
-    const source = interval(5000).pipe(
+    console.log(this.hardwareData.getCpuFan());
+    const sourceGpu = interval(5000).pipe(
       map(() => {
         const data = this.hardwareData.getGPU();
+        if (!data) {
+          return null;
+        }
         data[1] = JSON.stringify(data[1], null, " ");
         data[2] = JSON.stringify(data[2], null, " ");
         data[3] = JSON.stringify(data[3], null, " ");
@@ -25,12 +31,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         return data;
       })
     );
-    this.sourceSubscription = source.subscribe(res => {
+    this.sourceGpuSubscription = sourceGpu.subscribe(res => {
+      if (!res) {
+        return;
+      }
       this.gpuData = res;
+    });
+
+    const sourceCpu = interval(5000).pipe(
+      map(async () => {
+        const data = await this.hardwareData.getCpu();
+        return data;
+      })
+    );
+
+    this.sourceCpuSubscription = sourceCpu.subscribe(res => {
+      res.then(obj => {
+        console.log(obj);
+        this.cpuData = obj;
+      });
     });
   }
 
   ngOnDestroy() {
-    this.sourceSubscription.unsubscribe();
+    this.sourceGpuSubscription.unsubscribe();
+    this.sourceCpuSubscription.unsubscribe();
   }
 }
