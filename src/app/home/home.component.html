@@ -1,4 +1,53 @@
 <div class="container">
+  <div class="credential">
+    <mat-card class="component-card">
+      <div *ngIf="auth.user | async as user; else notlogged">
+        <mat-card-subtitle>{{ "Logged as " + user.email }}</mat-card-subtitle>
+      </div>
+
+      <ng-template #notlogged>
+        <mat-card-subtitle>{{ "Not Logged In" }}</mat-card-subtitle>
+      </ng-template>
+
+      <mat-card-content>
+        <form
+          (ngSubmit)="onSubmit(checkoutForm.value)"
+          [formGroup]="checkoutForm"
+          class="example-form"
+        >
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              type="email"
+              placeholder="Email"
+              name="email"
+              formControlName="email"
+            />
+            <mat-error *ngIf="checkoutForm.invalid">{{
+              "Not valid email or password"
+            }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              type="password"
+              placeholder="password"
+              formControlName="password"
+            />
+          </mat-form-field>
+          <div *ngIf="!loading" class="button-row">
+            <button type="submit" mat-button>Login</button>
+            <button type="button" (click)="signOut()" mat-button>
+              Logout
+            </button>
+          </div>
+
+          <pre *ngIf="loading">Loading...</pre>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <mat-grid-list cols="4" rowHeight="1:2">
     <mat-grid-tile>
       <mat-card class="component-card">
@@ -29,6 +78,11 @@
                {{ gpuData ? gpuData[4] : "Loading..." }}
               </pre
           >
+          <li>Usage</li>
+          <pre>
+              {{ gpuData ? gpuData[5] : "Loading..." }}
+             </pre
+         >
         </mat-card-content>
       </mat-card></mat-grid-tile
     >
@@ -41,23 +95,76 @@
             Loading...
           </mat-card-subtitle>
           <mat-card-subtitle *ngIf="cpuData">{{
-            cpuData.cpuInfo.manufacturer + " " + cpuData.cpuInfo.brand
+            cpuData.Name
           }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <li>CPU Current Clock</li>
           <pre>
-                 {{ (cpuData ? cpuData.cpuSpeed : "Loading...") | json }}
+                 {{ (cpuData ? cpuData.CoreClocks : "Loading...") | json }}
                 </pre
           >
           <li>CPU Temperature</li>
           <pre>
-                 {{ (cpuData ? cpuData.cpuTemp : "Loading...") | json }}
+                 {{
+              (cpuData ? cpuData.CoreTemperatures : "Loading...") | json
+            }}
                 </pre
           >
-          <li>CPU Temperature</li>
+          <li>CPU Load</li>
           <pre>
-                 {{ (cpuData ? cpuData.cpuLoad : "Loading...") | json }}
+                 {{ (cpuData ? cpuData.CoreLoads : "Loading...") | json }}
+                </pre
+          >
+          <li>CPU Fan</li>
+          <pre>
+                 {{ (cpuMainBoard ? cpuMainBoard.Lpcio : "Loading...") | json }}
+                </pre
+          >
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>RAM</mat-card-title>
+          <mat-card-subtitle *ngIf="!ramData">
+            Loading...
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="ramData">{{
+            ramData.memLayout.length + " " + "Slot Of RAM"
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <li>RAM Usage</li>
+          <pre>
+                 {{ (ramData ? ramData.memInfo : "Loading...") | json }}
+                </pre
+          >
+          <li>RAM Info</li>
+          <pre>
+                 {{ (ramData ? ramData.memLayout : "Loading...") | json }}
+                </pre
+          >
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>DISK</mat-card-title>
+          <mat-card-subtitle *ngIf="!diskData">
+            Loading...
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="diskData">{{
+            diskData.diskSize.length + " " + "Slot Of Disk"
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <li>Disk Info</li>
+          <pre>
+                 {{ (diskData ? diskData : "Loading...") | json }}
                 </pre
           >
         </mat-card-content>
